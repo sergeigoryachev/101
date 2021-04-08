@@ -2,7 +2,7 @@ import pandas as pd
 import os
 
 element_list = os.listdir(".\Documents\expedia-hotel-recommendations")
-print("List of files in current dir:", element_list)
+#print("List of files in current dir:", element_list)
 
 for i in range(len(element_list)):
     if element_list[i].endswith(".csv"):
