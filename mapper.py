@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import os
+import sys
 
-element_list = os.listdir()
-print *element_list
+# element_list = os.listdir()
+print sys.stdin
