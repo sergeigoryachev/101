@@ -1,3 +1,3 @@
 #!/usr/bin/python3
 
-print(1, 1)
+print(" ".join(sys.stdin.split(",")))
