@@ -1,19 +1,30 @@
-#!/usr/bin/python3
-"""mapper.py"""
+import unittest
+import os
+import hashlib
+import time
+from csvtoparquet import convert_to_parquet
 
-import sys
+CHUNK = 65536
+class TestConvertion(unittest.TestCase):
+    def setUp(self):
+        pass
 
-# input comes from STDIN (standard input)
-for line in sys.stdin:
-    # remove leading and trailing whitespace
-    line = line.strip()
-    # split the line into words
-    words = line.split()
-    # increase counters
-    for word in words:
-        # write the results to STDOUT (standard output);
-        # what we output here will be the input for the
-        # Reduce step, i.e. the input for reducer.py
-        #
-        # tab-delimited; the trivial word count is 1
-        print('%s\t%s' % (word, 1))
+    def test_extension(self):
+        start = time.time()
+        files_hash = []
+        files = convert_to_parquet()
+        for item in files:
+            md5 = hashlib.md5()
+            with open(item, 'rb') as test_parquet_file:
+                while True:
+                    data = test_parquet_file.read(CHUNK)
+                    if not data:
+                        break
+                    md5.update(data)
+            print(md5.hexdigest())
+            self.assertEqual(test_parquet_file, files)
+        finish = time.time()
+        print(finish - start)
+        
+if __name__ == "__main__":
+    unittest.main()
